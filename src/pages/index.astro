@@ -6,6 +6,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import RecentPublications from "../components/RecentPublications.astro";
 import { Image } from 'astro:assets';
 import House from './_house-in-winter.jpg';
+import Leaflet from "../components/Leaflet.astro";
 ---
 
 <!doctype html>
@@ -30,6 +31,42 @@ import House from './_house-in-winter.jpg';
         La maison à l'hiver 2022
         </p>
       </div>
+      <div>
+        <h2 class="text-xl md:text-3xl w-full text-cyan-950 my-5 dark:text-neutral-400">Nous rendre visite</h1>
+        <p class="w-full text-justify text-base md:text-lg">
+          128 Impasse du mage, 61210 Putanges le Lac, sur l’ancienne commune de La Forêt Auvray. 
+        </p>
+        <p class="w-full text-justify text-base md:text-lg mb-50">
+          Indice : Si vous voyez
+          un château d’eau, vous y êtes presque ! La maison se situe de l’autre
+          côté de la route…
+        </p>
+        <br/>
+        <section>
+          <div class="border-solid border-2 border-red-900 rounded" >
+            <Leaflet
+            container="leafletmap"
+            latitude=48.814826
+            longitude=-0.365081
+            zoom=15
+            tileLayer="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+            containerstyle="height: 400px; "
+            
+          />
+          </div>
+          
+          <h3 class="text-xl md:text-2xl w-full text-cyan-950 my-5 dark:text-neutral-400">Depuis Paris</h1>
+          <p class="w-full text-justify text-base md:text-lg mb-50">
+            Prendre le train Paris Montparnasse -> Briouze
+          </p>
+          <h3 class="text-xl md:text-2xl w-full text-cyan-950 my-5 dark:text-neutral-400">Depuis Briouze</h1>
+            <p class="w-full text-justify text-base md:text-lg mb-50">
+              45 min en vélo, 15 min en voiture (On vient vous chercher !) ou commander un transport à la demande avec le Nemus (au moins 48h à l’avance, ca coûte 1€), demander d’aller Bréel, puis marcher 30mn ou nous appeler pour qu’on vienne vous chercher !
+            </p>
+        </div>
+        </section>
+        
 	  <!-- <RecentPublications /> -->
 	      </main>
     <Footer />

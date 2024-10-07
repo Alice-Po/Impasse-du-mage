@@ -1,0 +1,117 @@
+---
+export interface Props {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+  /** the DOM ID of a <div> element */
+  container: string;
+  /** https://leafletjs.com/reference.html#tilelayer */
+  tileLayer: string;
+  /** Most tile servers require attribution. */
+  attribution: string;
+  containerstyle?: string;
+}
+
+const {
+  latitude,
+  longitude,
+  zoom,
+  container,
+  tileLayer,
+  attribution,
+  containerstyle = "height: 61.8vh",
+} = Astro.props;
+---
+
+
+<leaflet-map
+  data-latitude={latitude}
+  data-longitude={longitude}
+  data-zoom={zoom}
+  data-container={container}
+  data-tiles={tileLayer}
+  data-attribution={attribution}
+  data-containerstyle={containerstyle}
+>
+  <div id={container} style={containerstyle}></div>
+</leaflet-map>
+      <!-- <div class="me-auto place-self-center lg:col-span-7">
+        <h1
+          class="mb-3 text-2xl font-bold leading-tight tracking-tight text-red-800 md:text-4xl"
+        >
+          Nous rendre visite
+        </h1>
+        <p class="mb-6 text-red-950">
+          128 Impasse du mage (ou le Chenet pour googleMaps), 61210 Putanges le
+          Lac, sur l’ancienne commune de La Forêt Auvray. Indice : Si vous voyez
+          un château d’eau, vous y êtes presque ! La maison se situe de l’autre
+          côté de la route…
+        </p>
+        <h2
+          class="mb-3 text-2m font-bold leading-tight tracking-tight text-red-800 md:text-4m"
+        >
+          Depuis Paris
+        </h2>
+        <p class="mb-6 text-red-950">
+          Prendre le train Paris Montparnasse -> Briouze
+        </p>
+        <h2
+          class="mb-3 text-2m font-bold leading-tight tracking-tight text-red-800 md:text-4m"
+        >
+          Depuis Briouze
+        </h2>
+        <ul>
+          <li>45 min en vélo</li>
+          <li>15 min en voiture (On vient vous chercher !)</li>
+          <li>
+            Ou commander un transport à la demande avec le Nemus (au moins 48h à
+            l’avance, ca coûte 1€), demander d’aller Bréel, puis marcher 30mn ou
+            nous appeler pour qu’on vienne vous chercher !
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> -->
+
+  <script>
+    import "leaflet/dist/leaflet";
+    import "leaflet/dist/leaflet.css";
+    // import house from '../../public/img/house.png';
+
+    class LeafletMap extends HTMLElement {
+      constructor() {
+        super();
+
+        const latlng = [
+          Number(this.dataset.latitude),
+          Number(this.dataset.longitude),
+        ];
+
+        var map = L.map(this.dataset.container).setView(
+          latlng,
+          Number(this.dataset.zoom),
+        );
+        // console.log("house", house);
+        L.tileLayer(this.dataset.tiles, {
+          attribution: this.dataset.attribution,
+        }).addTo(map);
+
+        var HomeIcon = L.icon({
+          iconUrl: "../../public/house.png",
+
+          iconSize: [30, 30], // size of the icon
+          iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+          popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+        });
+
+
+        // var house = new HomeIcon({ iconUrl: { House } });
+
+        var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
+        marker.addTo(map);
+      }
+    }
+
+    window.customElements.define("leaflet-map", LeafletMap);
+  </script>
+</section>
