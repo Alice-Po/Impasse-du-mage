@@ -77,44 +77,128 @@ const {
   <script>
     // import "leaflet/dist/leaflet";
     import * as L from 'leaflet';
-
     import "leaflet/dist/leaflet.css";
-    // import house from '../../public/img/house.png';
+    import houseIcon from '../../public/house.png';
 
     class LeafletMap extends HTMLElement {
       constructor() {
         super();
 
-        const latlng = [
+        this.latlng = [
           Number(this.dataset.latitude),
           Number(this.dataset.longitude),
         ];
-
-        var map = L.map(this.dataset.container).setView(
-          latlng,
-          Number(this.dataset.zoom),
-        );
-        // console.log("house", house);
-        L.tileLayer(this.dataset.tiles, {
-          attribution: this.dataset.attribution,
-        }).addTo(map);
-
-        var HomeIcon = L.icon({
-          iconUrl: "../../public/house.png",
-
-          iconSize: [30, 30], // size of the icon
-          iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
-          popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-        });
-
-
-        // var house = new HomeIcon({ iconUrl: { House } });
-
-        var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
-        marker.addTo(map);
+        
       }
-    }
 
-    window.customElements.define("leaflet-map", LeafletMap);
-  </script>
+      connectedCallback() {
+    // Vérification de l'existence de window pour éviter les erreurs côté serveur
+    if (typeof window !== 'undefined') {
+      this.initMap();
+    }
+  }
+
+  initMap() {
+    const map = L.map(this.dataset.container).setView(
+      this.latlng,
+      Number(this.dataset.zoom),
+    );
+
+    L.tileLayer(this.dataset.tiles, {
+      attribution: this.dataset.attribution,
+    }).addTo(map);
+
+    const HomeIcon = L.icon({
+      iconUrl: houseIcon.src, // Utilisation de l'import d'image
+      iconSize: [30, 30],
+      iconAnchor: [10, 10],
+      popupAnchor: [-3, -76],
+    });
+
+    const marker = new L.Marker([48.814826, -0.365081], { icon: HomeIcon });
+    marker.addTo(map);
+  }
+}
+
+// Définir l'élément personnalisé
+window.customElements.define("leaflet-map", LeafletMap);
+
+
+
+
+
+
+    // if (typeof window !== 'undefined') {
+    //     var map = L.map(this.dataset.container).setView(
+    //       latlng,
+    //       Number(this.dataset.zoom),
+    //     );
+    //     // console.log("house", house);
+    //     L.tileLayer(this.dataset.tiles, {
+    //       attribution: this.dataset.attribution,
+    //     }).addTo(map);
+
+    //     var HomeIcon = L.icon({
+    //       iconUrl: "../../public/house.png",
+
+    //       iconSize: [30, 30], // size of the icon
+    //       iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+    //       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    //     });
+
+
+    //     // var house = new HomeIcon({ iconUrl: { House } });
+
+    //     var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
+    //     marker.addTo(map);
+    //   }
+  
+  
+    // window.customElements.define("leaflet-map", LeafletMap);
+
+
+
+
+    // class LeafletMap extends HTMLElement {
+    //   constructor() {
+    //     super();
+
+    //     const latlng = [
+    //       Number(this.dataset.latitude),
+    //       Number(this.dataset.longitude),
+    //     ];
+
+        
+
+    //     onMount(() => {
+    //       if (typeof window !== 'undefined') {
+    //     var map = L.map(this.dataset.container).setView(
+    //       latlng,
+    //       Number(this.dataset.zoom),
+    //     );
+    //     // console.log("house", house);
+    //     L.tileLayer(this.dataset.tiles, {
+    //       attribution: this.dataset.attribution,
+    //     }).addTo(map);
+
+    //     var HomeIcon = L.icon({
+    //       iconUrl: "../../public/house.png",
+
+    //       iconSize: [30, 30], // size of the icon
+    //       iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+    //       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    //     });
+
+
+    //     // var house = new HomeIcon({ iconUrl: { House } });
+
+    //     var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
+    //     marker.addTo(map);
+    //   }
+    // });
+  
+    // window.customElements.define("leaflet-map", LeafletMap);
+
+
+</script>
 </section>
