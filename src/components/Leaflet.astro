@@ -76,7 +76,7 @@ const {
   <script>
     // import "leaflet/dist/leaflet";
     import "leaflet/dist/leaflet.css";
-     import * as L from 'leaflet'
+    import L from 'leaflet';
     // import house from '../../public/img/house.png';
 
     class LeafletMap extends HTMLElement {
@@ -88,7 +88,8 @@ const {
           Number(this.dataset.longitude),
         ];
 
-        var map = L.map(this.dataset.container).setView(
+        if (typeof window !== 'undefined') {
+          var map = L.map(this.dataset.container).setView(
           latlng,
           Number(this.dataset.zoom),
         );
@@ -110,6 +111,7 @@ const {
 
         var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
         marker.addTo(map);
+      }
       }
     }
 
