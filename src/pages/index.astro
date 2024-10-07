@@ -1,9 +1,11 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Footer from "./../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import RecentPublications from "../components/RecentPublications.astro";
+import { Image } from 'astro:assets';
+import House from './_house-in-winter.jpg';
 ---
 
 <!doctype html>
@@ -23,21 +25,12 @@ import RecentPublications from "../components/RecentPublications.astro";
         </p>
       </div>
       <div class="w-full flex flex-col items-center gap-2.5 px-4 lg:px-0 mt-6">
-        <img
-          src="https://images.unsplash.com/photo-1635627408144-6bf36d28fb98"
-          alt="Astronaut"
-        />
+        <Image  src={House} alt="La maison en hiver"/>
         <p class="italic text-xs text-gray-600 dark:text-neutral-400">
-          Foto de <a
-            href="https://unsplash.com/es/@niklasjonasson?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-            >Niklas Jonasson</a
-          > en <a
-            href="https://unsplash.com/es/fotos/un-cuerpo-de-agua-con-arboles-en-el-fondo-j_WW0u2yYAE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-            >Unsplash</a
-          >
+        La maison à l'hiver 2022
         </p>
       </div>
-	  <RecentPublications />
+	  <!-- <RecentPublications /> -->
 	      </main>
     <Footer />
   </body>
