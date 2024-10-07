@@ -32,6 +32,7 @@ const {
   data-tiles={tileLayer}
   data-attribution={attribution}
   data-containerstyle={containerstyle}
+
 >
   <div id={container} style={containerstyle}></div>
 </leaflet-map>
@@ -75,8 +76,9 @@ const {
 
   <script>
     // import "leaflet/dist/leaflet";
+    import * as L from 'leaflet';
+
     import "leaflet/dist/leaflet.css";
-    import L from 'leaflet';
     // import house from '../../public/img/house.png';
 
     class LeafletMap extends HTMLElement {
@@ -88,8 +90,7 @@ const {
           Number(this.dataset.longitude),
         ];
 
-        if (typeof window !== 'undefined') {
-          var map = L.map(this.dataset.container).setView(
+        var map = L.map(this.dataset.container).setView(
           latlng,
           Number(this.dataset.zoom),
         );
@@ -111,7 +112,6 @@ const {
 
         var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
         marker.addTo(map);
-      }
       }
     }
 
