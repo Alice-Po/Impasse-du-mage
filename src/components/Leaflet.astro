@@ -21,8 +21,10 @@ const {
   attribution,
   containerstyle = "height: 61.8vh",
 } = Astro.props;
----
 
+import "leaflet/dist/leaflet.css";
+
+---
 
 <leaflet-map
   data-latitude={latitude}
@@ -37,18 +39,11 @@ const {
   <div id={container} style={containerstyle}></div>
 </leaflet-map>
 
-  <script>
+  <script type="module" >
 
-
-///complicated version
-    // import "leaflet/dist/leaflet";
-    import * as L from 'leaflet';
-    import "leaflet/dist/leaflet.css";
-    import houseIcon from '../../public/house.png';
-
+    import * as L from "https://cdn.jsdelivr.net/npm/leaflet@1.8.0/dist/leaflet-src.esm.js";
     class LeafletMap extends HTMLElement {
-      latlng: [number, number]; 
-      
+
       constructor() {
         super();
 
@@ -57,27 +52,15 @@ const {
           Number(this.dataset.longitude),
         ];
         
-      }
+        if (typeof window !== 'undefined') {
+    const map = L.map(this.dataset.container).setView([48.814826, -0.365081], 13);
 
-      connectedCallback() {
-    // Vérification de l'existence de window pour éviter les erreurs côté serveur
-    if (typeof window !== 'undefined') {
-      this.initMap();
-    }
-  }
-
-  initMap() {
-    const map = L.map(this.dataset.container).setView(
-      this.latlng,
-      Number(this.dataset.zoom),
-    );
-
-    L.tileLayer(this.dataset.tiles, {
-      attribution: this.dataset.attribution,
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
     const HomeIcon = L.icon({
-      iconUrl: houseIcon.src, // Utilisation de l'import d'image
+      iconUrl: "_house.png",
       iconSize: [30, 30],
       iconAnchor: [10, 10],
       popupAnchor: [-3, -76],
@@ -86,89 +69,11 @@ const {
     const marker = new L.Marker([48.814826, -0.365081], { icon: HomeIcon });
     marker.addTo(map);
   }
+      } 
 }
 
 // Définir l'élément personnalisé
 window.customElements.define("leaflet-map", LeafletMap);
-
-
-// version https://github.com/roblabs/maps-withastro/blob/main/src/Leaflet.astro
-
-
-
-
-//old version
-    // if (typeof window !== 'undefined') {
-    //     var map = L.map(this.dataset.container).setView(
-    //       latlng,
-    //       Number(this.dataset.zoom),
-    //     );
-    //     // console.log("house", house);
-    //     L.tileLayer(this.dataset.tiles, {
-    //       attribution: this.dataset.attribution,
-    //     }).addTo(map);
-
-    //     var HomeIcon = L.icon({
-    //       iconUrl: "../../public/house.png",
-
-    //       iconSize: [30, 30], // size of the icon
-    //       iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
-    //       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-    //     });
-
-
-    //     // var house = new HomeIcon({ iconUrl: { House } });
-
-    //     var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
-    //     marker.addTo(map);
-    //   }
-  
-  
-    // window.customElements.define("leaflet-map", LeafletMap);
-
-
-
-
-    // class LeafletMap extends HTMLElement {
-    //   constructor() {
-    //     super();
-
-    //     const latlng = [
-    //       Number(this.dataset.latitude),
-    //       Number(this.dataset.longitude),
-    //     ];
-
-        
-
-    //     onMount(() => {
-    //       if (typeof window !== 'undefined') {
-    //     var map = L.map(this.dataset.container).setView(
-    //       latlng,
-    //       Number(this.dataset.zoom),
-    //     );
-    //     // console.log("house", house);
-    //     L.tileLayer(this.dataset.tiles, {
-    //       attribution: this.dataset.attribution,
-    //     }).addTo(map);
-
-    //     var HomeIcon = L.icon({
-    //       iconUrl: "../../public/house.png",
-
-    //       iconSize: [30, 30], // size of the icon
-    //       iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
-    //       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-    //     });
-
-
-    //     // var house = new HomeIcon({ iconUrl: { House } });
-
-    //     var marker = new L.Marker([48.814826, -0.365081], {icon: HomeIcon});
-    //     marker.addTo(map);
-    //   }
-    // });
-  
-    // window.customElements.define("leaflet-map", LeafletMap);
-
 
 </script>
 </section>

@@ -4,6 +4,13 @@
         "strictNullChecks": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "types": ["node", "@types/leaflet"]
+        "types": ["node", "@types/leaflet"],
+        "allowUmdGlobalAccess": true,
+        "baseUrl": ".", // Required for paths
+        "paths": {
+          "https://cdn.jsdelivr.net/npm/leaflet@1.8.0/dist/leaflet-src.esm.js": [
+            "node_modules/@types/leaflet/index" // Re-map to the type
+          ]
+        }
     }
 }
